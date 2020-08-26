@@ -15,12 +15,11 @@ import (
 	"strings"
 )
 
-//Anagram function to check if the string is Anagram or not
-func Anagram(s string) []int {
+func helper(s string) []int {
 	s = strings.ToUpper(s)
 	charCount := make([]int, 26)
 	for _, char := range s {
-		if char != 32 {
+		if char >= 65 && char < 91 {
 			ascii := uint8(char) - 65
 			charCount[ascii]++
 		}
@@ -28,21 +27,27 @@ func Anagram(s string) []int {
 	return charCount
 }
 
-func main() {
-	fmt.Println("-------- Anagram Test ----------")
-	a, b := "rail safety", "fairy tales"
-	charCount1 := Anagram(a)
-	charCount2 := Anagram(b)
-	flag := 0
+//Anagram function to check if the string is Anagram or not
+func Anagram(a, b string) bool {
+	charCount1 := helper(a)
+	charCount2 := helper(b)
+
 	for i := 0; i < 26; i++ {
 		if charCount1[i] != charCount2[i] {
-			fmt.Println("Not Anagram")
-			flag = 1
-			break
+			return false
 		}
 	}
-	if flag == 0 {
-		fmt.Println("Anagram Word!!")
+	return true
+}
+
+func main() {
+	fmt.Println("-------- Anagram Test ----------")
+	a, b := "rail safety", "faiy tales"
+	res := Anagram(a, b)
+	if res {
+		fmt.Println("Anagram Words!!")
+	} else {
+		fmt.Println("Not Anagram Words!!")
 	}
 
 }
